@@ -10,11 +10,11 @@ $adaptadores | ForEach-Object {
 }
 
 # Solicita ao usuário que escolha um adaptador
-$escolha = Read-Host "Digite o número do adaptador que deseja alterar o MAC address"
+$escolha = Read-Host "Digite o numero do adaptador que deseja alterar o MAC address"
 
 # Valida a entrada do usuário
 if ($escolha -lt 1 -or $escolha -gt $adaptadores.Count) {
-    Write-Host "Escolha inválida. O script será encerrado."
+    Write-Host "Escolha invalida. O script será encerrado."
     Exit
 }
 
@@ -34,4 +34,8 @@ $rand = New-Object System.Random
 # Altera o endereço MAC do adaptador selecionado
 Set-NetAdapter -Name $adaptadorSelecionado.Name -MacAddress $novoMac
 
-Write-Host "O endereço MAC do adaptador $($adaptadorSelecionado.Name) foi alterado para: $novoMac"
+Write-Host "----------------------------------------------------------------------------------------------------------------"
+Write-Host "`nO endereco MAC do adaptador $($adaptadorSelecionado.Name) foi alterado com sucesso para: $novoMac`n"
+Write-Host "IMPORTANTE: Reinicie seu computador pois a alteracao do ID do HD somente sera efetivada apos o sistema reiniciar"
+Write-Host "FIM DO SCRIPT DE TROCA DE HWID, APERTE ENTER E DEPOIS REINICIE O COMPUTADOR NA SEQUENCIA!`n"
+Write-Host "----------------------------------------------------------------------------------------------------------------"
