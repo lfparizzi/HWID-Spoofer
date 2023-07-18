@@ -39,11 +39,14 @@ SET _RndAlphaNumz=!_RndAlphaNumz!!_Alphanumeric:~%_RNDZ%,1!
 If !_count! lss %_RNDLength% goto _loop
 @echo off
 @echo ----------------------------------------------------------------------------------------------------------------
-@echo ----------------------------------------------------------------------------------------------------------------
+@echo IMPORTANTE: A troca do HD ID so funciona com discos no formato NTFS, FAT ou FAT32
+@echo IMPORTANTE: Caso seu disco esteja em exFAT voce deve utilizar o software "AOMEI Partition Assistant Professional" para trocar seu HD ID
+@echo IMPORTANTE: Caso sua situacao seja a do exFAT e voce ja tenha realizado a mudanca pelo "AOMEI", selecione a letra do drive exFAT normalmente aqui para seguir com a execucao do script (o ID do HD exFAT NAO SERA ALTERADO!)
+@echo IMPORTANTE: Apos execucao total do codigo voce deve REINICIAR o computador, lembrarei voce disso ao final
+echo:
 @echo Abaixo voce consegue visualizar uma lista completa com todos os seus drives:
 
 fsutil fsinfo drives
-@echo ----------------------------------------------------------------------------------------------------------------
 @echo ----------------------------------------------------------------------------------------------------------------
 set /p drive= Qual drive ID voce quer alterar?(Apenas digite a letra do drive):  
 cd c:\
@@ -52,8 +55,8 @@ vol %drive%:
 pause
 @echo Drive %drive% id sera alterado para !_RndAlphaNum!-!_RndAlphaNumz!
 pause
-@echo Pressione qualquer tecla pra continuar com a alteracao...:
-volumeid.exe %drive%: !_RndAlphaNum!-!_RndAlphaNumz!
+volumeid64.exe %drive%: !_RndAlphaNum!-!_RndAlphaNumz!
+echo:
 @echo Drive %drive% id foi alterado com SUCESSO para !_RndAlphaNum!-!_RndAlphaNumz!
 pause
 cls
@@ -63,6 +66,7 @@ cls
 @echo off
 REM passo 5 HWID de tudo
 @echo ================== Carregando Outros HWID changers ==================
+echo:
 Setlocal EnableDelayedExpansion
 Set _RNDLength=2
 Set _Alphanumeric=0123456789ABCDEF
@@ -100,9 +104,7 @@ If !_count! lss %_RNDLength% goto _loop
 
 @echo off
 @echo ----------------------------------------------------------------------------------------------------------------
-@echo ----------------------------------------------------------------------------------------------------------------
-cd %~dp0\_ REM o código %~dp0 se refere ao diretório que o script foi rodado, aqui ele verifica se o path está funcionando, objetivo: acessar pasta com o AMIDEWINx64
-@echo ----------------------------------------------------------------------------------------------------------------
+cd "%~dp0\_"
 @echo ----------------------------------------------------------------------------------------------------------------
 @echo ALTERANDO TODOS OS HWIDs
 @echo CS sera alterado para: !_RndAlphaNumCS!!_RndAlphaNumBS!!_RndAlphaNumPSN!
@@ -110,9 +112,10 @@ cd %~dp0\_ REM o código %~dp0 se refere ao diretório que o script foi rodado, 
 @echo PSN sera alterado para: !_RndAlphaNumPSN!!_RndAlphaNumPSN!!_RndAlphaNumPSN!!_RndAlphaNumCS!!_RndAlphaNumBS!!_RndAlphaNumPSN!!_RndAlphaNumSS!
 @echo SS sera alterado para: !_RndAlphaNumSS!!_RndAlphaNumPSN!!_RndAlphaNumCS!!_RndAlphaNumBS!
 @echo SU sera alterado Automaticamente
+echo:
 pause
-@echo Pressione qualquer tecla para alterar todos os seus HWIDs: 
-cd %~dp0\_ REM o código %~dp0 se refere ao diretório que o script foi rodado, ele entra na pasta "_" e depois roda o AMIDEWINx64
+echo:
+cd "%~dp0\_"
 AMIDEWINx64.EXE /CS > nul !_RndAlphaNumCS!!_RndAlphaNumBS!!_RndAlphaNumPSN!
 AMIDEWINx64.EXE /BS > nul !_RndAlphaNumBS!!_RndAlphaNumPSN!!_RndAlphaNumSU!!_RndAlphaNumBS!
 AMIDEWINx64.EXE /PSN > nul !_RndAlphaNumPSN!!_RndAlphaNumPSN!!_RndAlphaNumPSN!!_RndAlphaNumCS!!_RndAlphaNumBS!!_RndAlphaNumPSN!!_RndAlphaNumSS!
